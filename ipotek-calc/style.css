@@ -184,3 +184,12 @@ input::-webkit-inner-spin-button {
 .bank.active {
     border-color: #599FF1;
 }
+
+.error {
+    display: none;
+    color: red;
+    font-size: 0.75rem;
+}
+.error.active {
+    display: block;
+}

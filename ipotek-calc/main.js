@@ -95,12 +95,25 @@ const calculation = (totalCost = 0, initialFee = 100000, creditTerm = 1) => {
 		numberOfMonths = 12 * numberOfYears;     // kol-vo mesacev
 
 	monthlyPayment = (lounAmount + (((lounAmount / 100) * interestRate) / 12) * numberOfMonths) / numberOfMonths;
-	const monthlyPaymentArounded = Math.round(monthlyPayment);
+	const monthlyPaymentArounded = Math.round(monthlyPayment),
+		  errorText              = document.querySelector('.error');
 	if (monthlyPaymentArounded < 0) {
-		return false;
+		totalAmountCredit.innerHTML      = '0 ₽';
+		totalMonthlyPayment.innerHTML    = '0 ₽';
+		totalRecommendedIncome.innerHTML = '0 ₽';
+		if (totalCost < initialFee) {
+			setTimeout(function() {
+				errorText.classList.add('active');
+			}, 500);
+		}
 	} else {
 		totalAmountCredit.innerHTML      = `${lounAmount} ₽`;
 		totalMonthlyPayment.innerHTML    = `${monthlyPaymentArounded} ₽`;
 		totalRecommendedIncome.innerHTML = `${monthlyPaymentArounded + ((monthlyPaymentArounded / 100) * 35)} ₽`;
+		if (totalCost >= initialFee) {
+			setTimeout(function() {
+				errorText.classList.remove('active');
+			}, 500);
+		}
 	}
 };
