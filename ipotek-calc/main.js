@@ -1,5 +1,6 @@
 // text inputs
-const totalCost  = document.getElementById('total-cost'),
+const textInputs = document.querySelectorAll('.input input[type="number"]'),
+	  totalCost  = document.getElementById('total-cost'),
 	  initialFee = document.getElementById('an-initial-fee'),
 	  creditTerm = document.getElementById('credit-term');
 
@@ -22,6 +23,13 @@ const assignValue = () => {
 	totalCost.value  = totalCostRange.value;
 	initialFee.value = initialFeeRange.value;
 	creditTerm.value = creditTermRange.value;
+};
+
+// 
+const assignValueReverse = () => {
+	totalCostRange.value  = totalCost.value; 
+	initialFeeRange.value = initialFee.value; 
+	creditTermRange.value = creditTerm.value; 
 };
 
 assignValue();
@@ -54,6 +62,7 @@ for(let bank of bankBtns) {
 		for(let item of bankBtns) {
 			item.classList.remove('active');
 		}
+
 		bank.classList.add('active');
 
 		takeActiveBank(bank);
@@ -70,6 +79,24 @@ const takeActiveBank = currentActive => {
 };
 
 // 
+for(textInput of textInputs) {
+	textInput.addEventListener('input', (e) => {
+		const target    = e.target,
+			  maxNumber = target.getAttribute('max'),
+			  minNumber = target.getAttribute('min');
+
+		if (target.value < 0) {
+			target.value = minNumber;
+			console.log('min');
+		}
+		
+		assignValueReverse();
+		calculation(totalCost.value, initialFee.value, creditTerm.value);	
+
+	});
+}
+
+// 
 for(input of inputRanges) {
 	input.addEventListener('input', () => {
 		assignValue();
@@ -77,7 +104,7 @@ for(input of inputRanges) {
 	});
 }
 
-// 
+// function for calculate 
 const calculation = (totalCost = 0, initialFee = 100000, creditTerm = 1) => {
 	/*
 		ep - montly credit
@@ -95,25 +122,31 @@ const calculation = (totalCost = 0, initialFee = 100000, creditTerm = 1) => {
 		numberOfMonths = 12 * numberOfYears;     // kol-vo mesacev
 
 	monthlyPayment = (lounAmount + (((lounAmount / 100) * interestRate) / 12) * numberOfMonths) / numberOfMonths;
+
 	const monthlyPaymentArounded = Math.round(monthlyPayment),
 		  errorText              = document.querySelector('.error');
+
 	if (monthlyPaymentArounded < 0) {
 		totalAmountCredit.innerHTML      = '0 ₽';
 		totalMonthlyPayment.innerHTML    = '0 ₽';
 		totalRecommendedIncome.innerHTML = '0 ₽';
+
 		if (totalCost < initialFee) {
 			setTimeout(function() {
 				errorText.classList.add('active');
 			}, 500);
 		}
+
 	} else {
 		totalAmountCredit.innerHTML      = `${lounAmount} ₽`;
 		totalMonthlyPayment.innerHTML    = `${monthlyPaymentArounded} ₽`;
 		totalRecommendedIncome.innerHTML = `${monthlyPaymentArounded + ((monthlyPaymentArounded / 100) * 35)} ₽`;
+		
 		if (totalCost >= initialFee) {
 			setTimeout(function() {
 				errorText.classList.remove('active');
 			}, 500);
 		}
+
 	}
 };

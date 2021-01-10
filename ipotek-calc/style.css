@@ -93,6 +93,15 @@ input::-webkit-inner-spin-button {
     padding-top: 40px;
 }
 
+@media (max-width: 500px) {
+    .calculator-content-body-left {
+        width: 60%;
+    }
+    .calculator-content-body-right {
+        width: 40%;
+    }
+}
+
 .calculator-content-body-right {
     padding-right: 0;
     padding-left: 30px;

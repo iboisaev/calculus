@@ -20,7 +20,7 @@
                         <div class="input-wrapper">
                             <div class="title">Стоимость недвижимости</div>
                             <div class="input">
-                                <input type="number" id="total-cost" value="0">
+                                <input type="number" id="total-cost" value="0" min="0" max="10000000" required pattern="\d+">
                             </div>
                             <div class="input">
                                 <input type="range" min="0" max="10000000" id="total-cost-range" value="0" class="input-range">
@@ -29,7 +29,7 @@
                         <div class="input-wrapper">
                             <div class="title">Первоначальный взнос</div>
                             <div class="input">
-                                <input type="number" id="an-initial-fee" value="0">
+                                <input type="number" id="an-initial-fee" value="0" min="100000" max="10000000" required pattern="\d+">
                             </div>
                             <div class="input">
                                 <input type="range" min="100000" max="10000000" id="an-initial-fee-range" value="0" class="input-range">
@@ -39,7 +39,7 @@
                         <div class="input-wrapper">
                             <div class="title">Срок кредита</div>
                             <div class="input">
-                                <input type="number" id="credit-term" value="0">
+                                <input type="number" id="credit-term" value="0" min="1" max="20" required pattern="\d+">
                             </div>
                             <div class="input">
                                 <input type="range" min="1" max="20" id="credit-term-range" value="0" class="input-range">
